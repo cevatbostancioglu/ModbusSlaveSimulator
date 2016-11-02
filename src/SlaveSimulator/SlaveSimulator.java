@@ -6,7 +6,10 @@ import com.serotonin.modbus4j.*;
 import com.serotonin.modbus4j.exception.ErrorResponseException;
 import com.serotonin.modbus4j.exception.ModbusTransportException;
 import com.serotonin.modbus4j.ip.IpParameters;
+ 
 
+//http://infiniteautomation.com/forum/topic/1586/modbus4j-listenertest-tcp-java-net-bindexception
+ 
 public class SlaveSimulator
 {
 	
