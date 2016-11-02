@@ -1,0 +1,10 @@
+{
+
+	"DeviceName"            : "slaveDevice001",
+	"DeviceModbusInterface" : "127.0.0.1",
+	"DeviceModbusPort"		: "502",
+	"DeviceModbusAddress"   : "1",
+	"DeviceModbusProtocol"  : "TCP"
+}
+
+
