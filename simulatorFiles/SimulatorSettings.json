@@ -1,10 +1,23 @@
 {
-
-	"DeviceName"            : "slaveDevice001",
-	"DeviceModbusInterface" : "127.0.0.1",
-	"DeviceModbusPort"		: "502",
-	"DeviceModbusAddress"   : "1",
-	"DeviceModbusProtocol"  : "TCP"
+	"General" :
+	{
+		"TCP_SLAVES"      	: "ENABLE",
+		"UDP_SLAVES"      	: "DISABLE",
+		"SERIAL_SLAVES"   	: "ENABLE",
+		"SLAVE_FILES_NAME"	: "slaveDevice-"
+	},
+	"DEBUG" :
+	{
+		"PRINT_TCP_REQ"   : "ENABLE",
+		"PRINT_UDP_REQ"   : "ENABLE",
+		"PRINT_SLAVE_REQ" : "ENABLE"
+	},
+	"LOG" : 
+	{
+		"LOG_TCP_REQ" : "ENABLE",
+		"LOG_UDP_REQ" : "ENABLE",
+		"LOG_RTU_REQ" : "ENABLE"
+	}
 }
 
 

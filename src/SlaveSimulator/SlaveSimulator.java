@@ -1,6 +1,9 @@
 package SlaveSimulator;
 
 import java.io.File;
+import java.io.IOException;
+
+import org.json.JSONException;
 
 import com.serotonin.modbus4j.*;
 import com.serotonin.modbus4j.exception.ErrorResponseException;
@@ -13,7 +16,7 @@ import com.serotonin.modbus4j.ip.IpParameters;
 public class SlaveSimulator
 {
 	
-	public static void main(String[] args) throws ModbusTransportException, ErrorResponseException
+	public static void main(String[] args) throws ModbusTransportException, ErrorResponseException, JSONException, IOException
 	{
 		File settingsFile = new File("C:\\Users\\Cevat\\Google Drive\\cevat_private\\GitHub\\ModbusSlaveSimulator\\simulatorFiles\\SimulatorSettings.json");
 		Simulator sim = new Simulator(settingsFile.getAbsolutePath());

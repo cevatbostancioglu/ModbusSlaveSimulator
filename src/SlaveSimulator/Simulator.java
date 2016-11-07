@@ -5,11 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.*;
 
 import com.serotonin.modbus4j.*;
 import com.serotonin.modbus4j.BasicProcessImage;
@@ -40,53 +42,36 @@ public class Simulator
 	
 	ModbusLocator mLocator;
 	
-	
 	IpParameters deviceIp;
 	
-	JSONParser jParser = new JSONParser();
-
+	private JSONObject jsonObject;
+	
 	public String simInterface;
 	public String simPort;
 	public String simAddress;
 	public String simProtocol;
 	
- 	Simulator(String jsonFilePath)
+ 	Simulator(String jsonFilePath) throws JSONException, IOException
 	{
+ 		simulatorSettingsFile = new File(jsonFilePath);
+ 		byte[] encoded = Files.readAllBytes(Paths.get(jsonFilePath));
+ 		String jsonContentString = new String(encoded, StandardCharsets.UTF_8);
+ 		
  		mFactory = new ModbusFactory();
  		simulatedDevice = mFactory.createTcpSlave(false);
-		try
-		{
-			Object obj = jParser.parse(new FileReader(jsonFilePath));
-			
-			JSONObject jsonObject = (JSONObject) obj;
-			
-			String simName = (String) jsonObject.get("DeviceName");
-			System.out.println("DeviceName :" + simName);
-			
-			simInterface  	= (String) jsonObject.get("DeviceModbusInterface");
-			simPort	  	 	= (String) jsonObject.get("DeviceModbusPort");
-			simAddress     	= (String) jsonObject.get("DeviceModbusAddress"); 			
-			simProtocol    	= (String) jsonObject.get("DeviceModbusProtocol");
-			
-			System.out.println("ModbusSimulator Running on << " + simInterface + ":" + 
-							simPort + " ID:" + simAddress + " Protocol:" + simProtocol + " >>");
-			
-		}
-		catch (FileNotFoundException e)
-		{	
-			System.out.println("File Not Found Exception");
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			System.out.println("IO Exception");
-			e.printStackTrace();
-		}
-		catch (ParseException e)
-		{
-			System.out.println("Parse Exception");
-			e.printStackTrace();
-		}
+		jsonObject = new JSONObject(jsonContentString);
+		
+		String simName = (String) jsonObject.get("DeviceName");
+		
+		System.out.println("DeviceName :" + simName);
+		
+		simInterface  	= (String) jsonObject.get("DeviceModbusInterface");
+		simPort	  	 	= (String) jsonObject.get("DeviceModbusPort");
+		simAddress     	= (String) jsonObject.get("DeviceModbusAddress"); 			
+		simProtocol    	= (String) jsonObject.get("DeviceModbusProtocol");
+		
+		System.out.println("ModbusSimulator Running on << " + simInterface + ":" + 
+						simPort + " ID:" + simAddress + " Protocol:" + simProtocol + " >>");
 		
 	}
 	
@@ -95,7 +80,7 @@ public class Simulator
 		if(simInterface.contains("COM") || simInterface.contains("tty") 
 				|| simInterface.contains("console") || simInterface.contains("amc"))
 		{}
-		else
+		else //if(simInter)
 		{
 			deviceIp = new IpParameters();
 			deviceIp.setHost(simAddress);
