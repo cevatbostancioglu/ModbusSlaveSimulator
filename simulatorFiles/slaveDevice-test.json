@@ -1,32 +1,17 @@
-{ // 1,2 ,3, 4 
-	"General" :
-	{
-		"DeviceName"            : "slaveDevice001",
-		"DeviceModbusInterface" : "127.0.0.1",
-		"DeviceModbusPort"		: "502",
-		"DeviceModbusAddress"   : "1",
-		"DeviceModbusProtocol"  : "TCP"
-	},
+{
+	"DeviceName"            : "slaveDevice001",
+	"DeviceModbusInterface" : "127.0.0.1",
+	"DeviceModbusPort"		: 502,
+	"DeviceModbusAddress"   : 1,
+	"DeviceModbusProtocol"  : "TCP",
 	"Registers" : 
-	{
-		"Regsiter" : 
+	[
 		{
-			"Address"  		: "1",
-			"InitFunction" 	: "1",
-			"Value"			: "TRUE"
-		},
-		"Register" : 
-		{
-			"Address" 		: "2",
-			"InitFunciton" 	: "2",
-			"Value" 		: "Date"
-		},
-		"Register" : 
-		{
-			"Address" 		: "2",
-			"InitFunciton" 	: "2",
-			"Value" 		: "Random"		
+			"Address" 		: 1,
+			"InitFunciton" 	: 1,
+			"StartValue" 	: "Random",
+			"Function"		: "SystemDate"
 		}
-	}
+	]
 }
 

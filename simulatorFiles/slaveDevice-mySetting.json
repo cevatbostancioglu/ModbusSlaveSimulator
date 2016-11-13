@@ -1,0 +1,29 @@
+{
+	"DeviceName"            : "slaveDevice002",
+	"DeviceModbusInterface" : "127.0.0.1",
+	"DeviceModbusPort"		: 502,
+	"DeviceModbusAddress"   : 2,
+	"DeviceModbusProtocol"  : "TCP",
+	"Registers" : 
+	[
+		{
+			"Address" 		: 2,
+			"InitFunciton" 	: 2,
+			"StartValue" 	: "RANDOM",
+			"Function"		: "NORMAL"		
+		},
+		{
+			"Address" 		: 2,
+			"InitFunciton" 	: 2,
+			"StartValue" 	: "RANDOM",
+			"Function"		: "NORMAL"		
+		},
+		{
+			"Address" 		: 2,
+			"InitFunciton" 	: 2,
+			"StartValue" 	: "RANDOM",
+			"Function"		: "NORMAL"		
+		}
+	]
+}
+

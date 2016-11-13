@@ -1,0 +1,2 @@
+-- ideas for register file checkers
+---- set_coil , just takes 1/0 values. can not be date

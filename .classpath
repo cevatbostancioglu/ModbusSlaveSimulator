@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Cevat/Downloads/modbus4J.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Cevat/Downloads/seroUtils.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Cevat/Downloads/java-json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Cevat/Downloads/jackson/jackson-all-1.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
