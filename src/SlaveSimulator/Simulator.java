@@ -142,7 +142,7 @@ public class Simulator
 			}
 		}
 		
-		System.out.println("Toplam " + slaveDevices.size() + " adet cihaz olusturuldu.");
+		System.out.println("\n\r Toplam " + slaveDevices.size() + " adet cihaz olusturuldu. \n\r");
 	}
 	
 }

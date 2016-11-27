@@ -71,8 +71,13 @@ class Registers
 
 class SlaveDeviceFunctionsCode
 {
-	public static String Date = "date";
-	public static String Random = "random";
+	public static String Date		= "date";
+	public static String Random 	= "random";
+	public static String trueValue  = "true";
+	public static String falseValue = "false";
+	public static String On			= "on";
+	public static String Off		= "off";
+	
 }
 
 public class SlaveDevice 
@@ -90,7 +95,7 @@ public class SlaveDevice
 	
 	public int totalRegisterNumber;
 
-	private ArrayList<Registers> registers;
+	private ArrayList<Registers> registersArray = new ArrayList<Registers>();
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	private JsonNode registersNode,root;
@@ -125,17 +130,17 @@ public class SlaveDevice
 		System.out.println("DevicePort : " + devicePort);
 		System.out.println("ModbusAddress : " + deviceModbusAddres);
 		System.out.println("Protocol : " + deviceModbusProtocol);
-		
-		registers = new ArrayList<Registers>();
-		
+
 		registersNode = root.path("Registers");
 		
-		Registers reg = new Registers();
+		
 		
 		for(JsonNode node: registersNode)
 		{
+			Registers reg = new Registers();
+			
 			reg.setAddress(node.path("Address").asInt());
-			reg.setInitFunction((node.path("InitFunciton").asInt()));
+			reg.setInitFunction((node.path("InitFunction").asInt()));
 			reg.setStartValue(node.path("StartValue").asText());
 			reg.setFunction(node.path("Function").asText());
 			
@@ -147,7 +152,7 @@ public class SlaveDevice
 			System.out.println(reg.totalRegisterNumber + "->Function     : " + reg.getFunction());
 			System.out.println("");
 			
-			registers.add(reg);
+			registersArray.add(reg);
 			
 			reg.totalRegisterNumber++;
 			totalRegisterNumber++;
@@ -173,6 +178,7 @@ public class SlaveDevice
 		else
 		{
 			System.out.println("MODBUS TCP/UDP");
+			
 			if(deviceModbusProtocol.equals("TCP"))
 			{System.out.println("TCP device created");sDevice = sFactory.createTcpSlave(false);}
 			else if(deviceModbusProtocol.equals("UDP"))
@@ -184,28 +190,85 @@ public class SlaveDevice
 			
 			sDeviceMap = new BasicProcessImage(deviceModbusAddres);
 			
-			Registers reg = new Registers();
+			sDeviceMap.setAllowInvalidAddress(false);
+			sDeviceMap.setInvalidAddressValue(Short.MIN_VALUE);
 			
-			for(int i=0; i < registers.size(); i++)
+			for(int i=0; i < registersArray.size(); i++)
 			{
-				reg = registers.get(i);
+				Registers regCurr = new Registers();
 				
-				if(reg.getInitFunction() == RegisterRange.COIL_STATUS)
+				regCurr = registersArray.get(i);
+				
+				if(regCurr.getInitFunction() == RegisterRange.COIL_STATUS) // 1
 				{
-					if(reg.getStartValue().toLowerCase().equals(SlaveDeviceFunctionsCode.Random))
+					if(regCurr.getStartValue().toLowerCase().contains(SlaveDeviceFunctionsCode.Random))
 					{
 						Random rnd = new Random();
-						sDeviceMap.setCoil(reg.getAddress(), true);
-						System.out.println("random yuklendi.");
+						Boolean rndValue = rnd.nextBoolean();
+						
+						sDeviceMap.setCoil(regCurr.getAddress(),rndValue);
+						
+						System.out.println("FN:1 -> " + regCurr.getAddress() + " -> random yuklendi -> " + rndValue);
 					}
 					else
-					{sDeviceMap.setCoil(reg.getAddress(),reg.getStartValue().toLowerCase().equals("true") ? true : false );}
+					{
+						sDeviceMap.setCoil(regCurr.getAddress(),regCurr.getStartValue().toLowerCase().
+									equals(SlaveDeviceFunctionsCode.trueValue) ? true : false );
+						
+						System.out.println("FN:1 -> " + regCurr.getAddress() + " -> normal yuklendi -> " + regCurr.getStartValue());
+					}
 				}
-				/*else if(reg.getInitFunction() == )
+				else if(regCurr.getInitFunction() == RegisterRange.INPUT_STATUS) // 2 
 				{
-					RegisterRange.
+					if(regCurr.getStartValue().toLowerCase().contains(SlaveDeviceFunctionsCode.On))
+					{
+						sDeviceMap.setInput(regCurr.getAddress(), true);
+						
+						System.out.println("FN:2 -> " + regCurr.getAddress() + " -> On yuklendi.");
+					}
+					else
+					{
+						sDeviceMap.setInput(regCurr.getAddress(), false);
+						
+						System.out.println("FN:2 -> " + regCurr.getAddress() + " -> Off yuklendi.");
+					}
 				}
-				*/
+				else if(regCurr.getInitFunction() == RegisterRange.HOLDING_REGISTER)
+				{
+					if(regCurr.getStartValue().toLowerCase().contains(SlaveDeviceFunctionsCode.Random))
+					{
+						Random rnd = new Random();
+						int rndValue = rnd.nextInt();
+						
+						sDeviceMap.setHoldingRegister(regCurr.getAddress(), (short) (rndValue % Short.MAX_VALUE));
+						
+						System.out.println("FN:3 -> " + regCurr.getAddress() + " -> Random -> " +(short) (rndValue % Short.MAX_VALUE));
+					}
+					else
+					{
+						sDeviceMap.setHoldingRegister(regCurr.getAddress(),Short.parseShort(regCurr.getStartValue()));
+						
+						System.out.println("FN:3 -> " + regCurr.getAddress() + " -> " + Short.parseShort(regCurr.getStartValue()));
+					}
+				}
+				else if(regCurr.getInitFunction() == RegisterRange.INPUT_REGISTER)
+				{
+					if(regCurr.getStartValue().toLowerCase().contains(SlaveDeviceFunctionsCode.Random))
+					{
+						Random rnd = new Random();
+						int rndValue = rnd.nextInt();
+						
+						sDeviceMap.setInputRegister(regCurr.getAddress(), (short) (rndValue % Short.MAX_VALUE));
+						
+						System.out.println("FN:4 -> " + regCurr.getAddress() + " -> Random -> " +(short) (rndValue % Short.MAX_VALUE));
+					}
+					else
+					{
+						sDeviceMap.setInputRegister(regCurr.getAddress(),Short.parseShort(regCurr.getStartValue()));
+						
+						System.out.println("FN:4 -> " + regCurr.getAddress() + " -> " + Short.parseShort(regCurr.getStartValue()));
+					}
+				}
 			}
 			
 			sDevice.addProcessImage(sDeviceMap);
@@ -216,8 +279,6 @@ public class SlaveDevice
 		this.totalRegisterNumber = totalRegisterNumber;
 	}
 
-	
-	
 
 	@Override
 	public String toString() {

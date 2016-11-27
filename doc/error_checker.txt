@@ -1,2 +1,4 @@
 -- ideas for register file checkers
 ---- set_coil , just takes 1/0 values. can not be date
+---- input_status , just takes 1/0 values. can not be date. just on/off or 1/0
+---- holding_registers , just takes between short.min(-32766), short.max(+32766)

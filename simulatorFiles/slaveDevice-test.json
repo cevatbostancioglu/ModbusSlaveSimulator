@@ -8,9 +8,63 @@
 	[
 		{
 			"Address" 		: 1,
-			"InitFunciton" 	: 1,
+			"InitFunction" 	: 1,
 			"StartValue" 	: "Random",
+			"Function"		: "Random"
+		},
+		{
+			"Address" 		: 2,
+			"InitFunction" 	: 1,
+			"StartValue" 	: "True",
+			"Function"		: "Normal"
+		},
+		{
+			"Address" 		: 3,
+			"InitFunction" 	: 1,
+			"StartValue" 	: "False",
 			"Function"		: "SystemDate"
+		},
+		{
+			"Address" 		: 4,
+			"InitFunction" 	: 2,
+			"StartValue" 	: "Off",
+			"Function"		: "Normal"
+		},
+		{
+			"Address" 		: 5,
+			"InitFunction" 	: 2,
+			"StartValue" 	: "On",
+			"Function"		: "Normal"
+		},
+		{
+			"Address" 		: 6,
+			"InitFunction" 	: 3,
+			"StartValue" 	: "Random",
+			"Function"		: "Normal"
+		},
+		{
+			"Address" 		: 7,
+			"InitFunction" 	: 3,
+			"StartValue" 	: "3456",
+			"Function"		: "Normal"
+		},
+		{
+			"Address" 		: 8,
+			"InitFunction" 	: 4,
+			"StartValue" 	: "4123",
+			"Function"		: "Normal"
+		},
+		{
+			"Address" 		: 9,
+			"InitFunction" 	: 4,
+			"StartValue" 	: "1480256738",
+			"Function"		: "Normal"
+		},
+		{
+			"Address" 		: 10,
+			"InitFunction" 	: 4,
+			"StartValue" 	: "Random",
+			"Function"		: "Normal"
 		}
 	]
 }
